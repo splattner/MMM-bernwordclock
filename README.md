@@ -1,5 +1,5 @@
 # Module: Word Clock
-This Magic Mirror Module displays a Word Clock written in the Swiss German dialect of Bern
+This Magic Mirror module displays a Word Clock written in the Swiss German dialect of Bern.
 
 ## Using the module
 
@@ -9,9 +9,6 @@ modules: [
     {
 		module: 'MMM-bernwordclock',
 		position: 'bottom_left',
-		header: 'Zugverbindungen',
-
-
 	},
 ]
 ````
