@@ -11,7 +11,7 @@ Module.register("MMM-bernwordclock",{
 
 	// Define module defaults
 	defaults: {
-		updateInterval: 1000, 
+		updateInterval: 1000,
 		
 	},
 
@@ -32,6 +32,38 @@ Module.register("MMM-bernwordclock",{
 		// Set locale.
 		moment.locale(config.language);
 
+		this.elements = [];
+
+		this.elements["hour1"] = "eis";
+		this.elements["hour2"] = "zwöi";
+		this.elements["hour3"] = "drü";
+		this.elements["hour4"] = "vieri";
+		this.elements["hour5"] = "füfi";
+		this.elements["hour6"] = "sächsi";
+		this.elements["hour7"] = "sibni";
+		this.elements["hour8"] = "achti";
+		this.elements["hour9"] = "nüni";
+		this.elements["hour10"] = "zäni";
+		this.elements["hour11"] = "eufi";
+		this.elements["hour12"] = "zwöufi";
+
+		this.elements["befor"] = "vor";
+		this.elements["past"] = "ab";
+
+		this.elements["five"] = "füf";
+		this.elements["ten"] = "zää";
+		this.elements["quarter"] = "viertu";
+		this.elements["twenty"] = "zwänzg";
+		this.elements["half"] = "haubi";
+
+		this.elements["it"] = "es";
+		this.elements["is"] = "isch";
+
+		this.elements["dot1"] = "dot1";
+		this.elements["dot2"] = "dot2";
+		this.elements["dot3"] = "dot3";
+		this.elements["dot4"] = "dot4";
+
 		// Set Interval for Update
 		var self = this;
 		setInterval(function() {
@@ -43,245 +75,136 @@ Module.register("MMM-bernwordclock",{
 
 		this.resetWordClock();
 
-
 	    var currentTime = moment();
+	    var elements = ["it","is"];
 
-		var es = document.getElementById("es");
-		es.className = "white";
 
-		var isch = document.getElementById("isch");
-		isch.className = "white";
-
-		var hour = currentTime.hour();
-		if (hour > 12) hour -=12 ;
+		var hour = currentTime.hour() % 12;
 		var minute = currentTime.minute();
 
 
-		if (minute >= 0 && minute < 5){
-			this.setHour(hour);
-		}
-
-		if (minute >= 5 && minute < 10) {
-			var füf = document.getElementById("füf");
-			var ab = document.getElementById("ab");
-			füf.className = "white";
-			ab.className = "white";
-
-			this.setHour(hour);
-		}
-
-		if (minute >= 10 && minute < 15) {
-			var zää = document.getElementById("zää");
-			var ab = document.getElementById("ab");
-			zää.className = "white";
-			ab.className = "white";
-
-			this.setHour(hour);
-		}
-
-		if (minute >= 15 && minute < 20) {
-			var viertu = document.getElementById("viertu");
-			var ab = document.getElementById("ab");
-			viertu.className = "white";
-			ab.className = "white";
-
-			this.setHour(hour);
-		}
-
-		if (minute >= 20 && minute < 25) {
-			var zwänzg = document.getElementById("zwänzg");
-			var ab = document.getElementById("ab");
-			zwänzg.className = "white";
-			ab.className = "white";
-
-			this.setHour(hour);
-		}
-
+		if (minute >= 0 && minute < 5){ }
+		if (minute >= 5 && minute < 10) { elements.push("five","past"); }
+		if (minute >= 10 && minute < 15) { elements.push("ten","past"); }
+		if (minute >= 15 && minute < 20) { elements.push("quarter","past"); }
+		if (minute >= 20 && minute < 25) { elements.push("twenty","past"); }
 		if (minute >= 25 && minute < 30) {
-			var füf = document.getElementById("füf");
-			var vor = document.getElementById("vor");
-			var haubi = document.getElementById("haubi");
-			füf.className = "white";
-			vor.className = "white";
-			haubi.className = "white"
-
-			hour +=1;
-			if (hour > 12) hour -=12 ;
-
-			this.setHour(hour);
+			elements.push("five","befor","half");
+			hour = (hour + 1) % 12;
 		}
 
 		if (minute >= 30 && minute < 35) {
-			var haubi = document.getElementById("haubi");
-			haubi.className = "white"
-
-			hour +=1;
-			if (hour > 12) hour -=12 ;
-
-			this.setHour(hour);
+			elements.push("half");
+			hour = (hour + 1) % 12;
 		}
 
 		if (minute >= 35 && minute < 40) {
-			var füf = document.getElementById("füf");
-			var haubi = document.getElementById("haubi");
-			var ab = document.getElementById("ab");
-			haubi.className = "white";
-			ab.className = "white";
-			füf.className = "white";
-
-			hour +=1;
-			if (hour > 12) hour -=12 ;
-
-			this.setHour(hour);
+			elements.push("five","past","half");
+			hour = (hour + 1) % 12;
 		}
 
 		if (minute >= 40 && minute < 45) {
-			var zwänzg = document.getElementById("zwänzg");
-			var vor = document.getElementById("vor");
-			zwänzg.className = "white";
-			vor.className = "white";
-
-			hour +=1;
-			if (hour > 12) hour -=12 ;
-
-			this.setHour(hour);
+			elements.push("twenty","befor");
+			hour = (hour + 1) % 12;
 		}
 
 		if (minute >= 45 && minute < 50) {
-			var viertu = document.getElementById("viertu");
-			var vor = document.getElementById("vor");
-			viertu.className = "white";
-			vor.className = "white";
-
-			hour +=1;
-			if (hour > 12) hour -=12 ;
-
-			this.setHour(hour);
+			elements.push("quarter","befor");
+			hour = (hour + 1) % 12;
 		}
 
 		if (minute >= 50 && minute < 55) {
-			var zää = document.getElementById("zää");
-			var vor = document.getElementById("vor");
-			zää.className = "white";
-			vor.className = "white";
-
-			hour +=1;
-			if (hour > 12) hour -=12 ;
-
-			this.setHour(hour);
+			elements.push("ten","befor");
+			hour = (hour + 1) % 12;
 		}
 
 		if (minute >= 55 ) {
-			var füf = document.getElementById("füf");
-			var vor = document.getElementById("vor");
-			füf.className = "white";
-			vor.className = "white";
-
-			hour +=1;
-			if (hour >= 12) hour -=12 ;
-
-			this.setHour(hour);
+			elements.push("five","befor");
+			hour = (hour + 1) % 12;
 		}
 
-		this.setDot(minute);
 
+		elements.push(this.setHour(hour));
+		var dots = this.setDot(minute);
+		for (d in dots) {
+			elements.push(dots[d]);
+		}
 
-
+		this.changeToAchtive(elements);
 	}, 
 
 	setDot : function(minute) {
 
 		minute = minute % 5;
-
-		var dot1 = document.getElementById("dot1");
-		var dot2 = document.getElementById("dot2");
-		var dot3 = document.getElementById("dot3");
-		var dot4 = document.getElementById("dot4");
+		var elements = [];
 
 		switch (minute) {
 			case 0:
-
 				break;
 			case 1:
-				dot1.className = "white";
+				elements.push("dot1");
 				break;
 			case 2:
-				dot1.className = "white";
-				dot2.className = "white";
+				elements.push("dot1","dot2");
 				break;
-
 			case 3:
-				dot1.className = "white";
-				dot2.className = "white";
-				dot3.className = "white";
-
+				elements.push("dot1","dot2","dot3");
 				break;
 			case 4:
-				dot1.className = "white";
-				dot2.className = "white";
-				dot3.className = "white";
-				dot4.className = "white";
+				elements.push("dot1","dot2","dot3","dot4");
 				break;
 		}
+
+		return elements;
 	},
 	
 	setHour: function(hour) {
 
 		switch(hour) {
 			case 0:
-				var hourdigit = document.getElementById("zwöufi");
-				break;
+				return "hour12";
 			case 1:
-				var hourdigit = document.getElementById("eis");
-				break;
+				return "hour1";
 			case 2:
-				var hourdigit = document.getElementById("zwöi");
-				break;
+				return "hour2";
 			case 3:
-				var hourdigit = document.getElementById("drü");
-				break;
+				return "hour3";
 			case 4:
-				var hourdigit = document.getElementById("vieri");
-				break;
+				return "hour4";
 			case 5:
-				var hourdigit = document.getElementById("füfi");
-				break;
+				return "hour5";
 			case 6:
-				var hourdigit = document.getElementById("sächsi");
-				break;
+				return "hour6";
 			case 7:
-				var hourdigit = document.getElementById("sibni");
-				break;
+				return "hour7";
 			case 8:
-				var hourdigit = document.getElementById("achti");
-				break;
+				return "hour8";
 			case 9:
-				var hourdigit = document.getElementById("nüni");
-				break;
+				return "hour9";
 			case 10:
-				var hourdigit = document.getElementById("zäni");
-				break;
+				return "hour10";
 			case 11:
-				var hourdigit = document.getElementById("eufi");
-				break;
+				return "hour11";
 			case 12:
-				var hourdigit = document.getElementById("zwöufi");
-				break;
+				return "hour12";
 		}
-
-		hourdigit.className = "white";
 	},
 
 	resetWordClock: function() {
 
-		var items = ["es", "isch","füf","ab","zää","viertu","zwänzg","vor","eis","zwöi","drü","vieri","füfi","sächsi","sibni","achti","nüni","zäni","eufi","zwöufi","dot1","dot2","dot3","dot4"]
-
-		for (var i in items) {
-			var item = document.getElementById(items[i]);
+		for (var i in this.elements) {
+			var item = document.getElementById(this.elements[i]);
 			item.className = "";
 		}
 
-	}, 
+	},
+
+	changeToAchtive: function(elements) {
+		for (var i in elements) {
+			var item = document.getElementById(this.elements[elements[i]]);
+			item.className = "white";
+		}
+	},
     
 	// Override dom generator.
 	getDom: function() {
