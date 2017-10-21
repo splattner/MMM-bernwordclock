@@ -11,7 +11,7 @@ Module.register("MMM-bernwordclock",{
 
 	// Define module defaults
 	defaults: {
-		updateInterval: 1000,
+		updateInterval: 1000 * 30,
 		
 	},
 
